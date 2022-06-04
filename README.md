@@ -1,81 +1,158 @@
-# Business Connector Dev
+# ![One37 Logo](https://www.one37id.com/images/Logo-2.svg)
 
-Assets for a local developer setup of the One37 Business Connector (Template Project)
+One37 Business Connector - Local Development
 
-## Getting started
+Assets for a developer to setup a local instanceof the One37 Business Connector using pre-built docker containers.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Background
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+The robust One37 Business Connector unlocks the reuse of Verifiable Credentials to business applications, ensuring accuracy, completeness, and trust of data without any added burden or lengthy form-filling.
 
-## Add your files
+The Business connector offers a 'black-box' solution to bridge existing business applications with the decentralised world of Verifiable Credentials.
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin https://gitlab.com/one37id/customerdev/business-connector-dev.git
-git branch -M main
-git push -uf origin main
-```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://gitlab.com/one37id/customerdev/business-connector-dev/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+This is achieved with simple RESTful API integration and No-Code visual design for customer facing workflows.
 
 ## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+
+### Requirements
+
+The developer workstation will need to meet the following requirements:
+
+* **Windows 10+** or **Apple MacOS 14+** or **Linux OS distribution**
+* **Docker Desktop or Docker CE** installed with **docker-compose** support.
+* A Public Internet address or Inward traffic routing solution like [Ngrok](https://ngrok.com/docs/getting-started)
+* One37 issued Docker Registry access credentials
+* Appropriate code editing tools for your chosen software development languages. eg [VSCode](https://code.visualstudio.com/)
+
+### Setup
+
+Sign-in to GitHub and Fork the fllowing repository to your own account.
+[https://github.com/One37ID/business-connector-dev.git](https://github.com/One37ID/business-connector-dev.git)
+
+At the command line interface for the relevant operating system, clone the new forked repo to a local working folder.
+
+``` bash
+git clone https://github.com/YOUR_OWN_ACCOUNT/business-connector-dev.git
+```
+
+As of the latest release, your local folder contents should look like this.
+
+``` powershell
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---          2022/06/02    12:39           6594 .gitignore
+-a---          2022/06/02    13:48           1268 docker-compose.yml
+-a---          2022/06/02    15:20           5874 editme-config.json
+-a---          2022/06/02    15:19           4025 README.md
+-a---          2022/06/02    09:32              0 run-agent.bat
+-a---          2022/06/02    12:37              0 run-agent.sh
+```
+<br>
+Setup `ngrok` as per it's platform specific installation instructions.
 
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+
+### Customize the docker yml
+
+Before starting the Business Connector, it may be preferred to modify several parameters that are present in the `docker-compose.yml` file.
+For instance the file has values which define passwords for access to the Redis and PostgreSQL instances and these should be changed for better security.
+
+**Note:** There is one value which REQUIRES changing `AGENT_ALIAS=DEV:CHANGEME_TO_UNIQUE_VAL`
+You must set this value after `DEV:` to something easily quoted, but totally unique to the world.
+This is because this value will be published in a globally referenced directory.
+<br>
+```
+version: '1.0'
+services:
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+  cache:
+    image: redis:latest
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxxxxxxxxxxxxxx8oLd2t81
+    volumes:
+      - cache:/data
+  agent:
+    image: registry.gitlab.com/one37id/registry/solitaire/staging
+    depends_on:
+      - db
+      - cache
+    ports:
+      - 80:3000
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - MINIMUM_LOG_LEVEL=1
+      - AGENT_SETUP_MODE=true
+      - RECREATE_WORKFLOWS=false
+      - DELETE_REDIS_CONFIG=false
+      - AGENT_ALIAS=CHANGEME_TO_UNIQUE_VAL.dev
+      - KESTREL_PORT=80
+      - AUTH_REQUEST_MAX_TTL_MINUTES=1
+      - AUTH_BACKDOOR_SECRET_KEY=LocalDevHash
+      - AUTH_SECRET_KEY=EzAKoAxdivooooooooooooofIgb5zHOi
+      - AUTH_NONCE_TTL_MINUTES=1
+      - REDIS_HOST=cache
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=eYVX7EwVmmxxxxxxxxxxxxxx8oLd2t81
+    links:
+      - db
+      - cache
+volumes:
+  cache:
+    driver: local
+```
+
+### Start the services
+
+Start the services into config mode with this command in the project folder:
+
+``` bash
+docker-compose up
+```
+
+After it has started you can confirm this by pointing your browser to
+
+[http://localhost:3000/swagger](http://localhost:3000/swagger)
+
+In order to be able to communicate with this instance from the Upa! Wallet App, it will need to be publicly accessible.
+
+Start ngrok as follows to make a publicly accessible network tunnel.
+<br>
+```
+ngrok http 3000
+```
+
+It will set up the tunnel and output a **Forwarding URL** that will need to be captured into the service's configuration as detailed below.
+
+**Note:**
+Unless you have a paid subscription to ngrok with custom domains configured, this **forwarding** value will only be valid for **this session** and the config will need updating each time ngrok is restarted.
+
+### Access and Configuration
+
+You must also open and edit then supplied json config file `editme-config.json` to match any modifications made to the redis or postgres db connection credentials and ports.
+
+Also update the `hostName` and `agency.callbackUrl` host path values based on the **Forwarding URL** generated by **ngrok**
 
 ## Support
+
 Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
 
 ## Roadmap
+
 If you have ideas for releases in the future, it is a good idea to list them in the README.
 
 ## Contributing
+
 State if you are open to contributions and what your requirements are for accepting them.
 
 For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
@@ -83,10 +160,13 @@ For people who want to make changes to your project, it's helpful to have some d
 You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
 
 ## Authors and acknowledgment
+
 Show your appreciation to those who have contributed to the project.
 
 ## License
+
 For open source projects, say how it is licensed.
 
 ## Project status
+
 If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
