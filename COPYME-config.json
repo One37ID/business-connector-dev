@@ -1,0 +1,137 @@
+{
+  "environment": "Development",
+  "minimumLogLevel": "1",
+  "hostname": "NgrokHostname",
+  "port": "443",
+  "databases": [
+    {
+      "connectionName": "database",
+      "storageType": "postgres_storage",
+      "host": "database",
+      "port": "5432",
+      "adminUser": "postgres",
+      "adminPassword": "postgres",
+      "user": "postgres",
+      "Password": "postgres"
+    },
+    {
+      "connectionName": "redis",
+      "host": "redis",
+      "port": "6379",
+      "Password": ""
+    }
+  ],
+  "sessionSecurity": {
+    "Database": {
+      "connectionName": "redis"
+    }
+  },
+  "agency": {
+    "alias": "dev:Your-Agent-Name",
+    "namespace": "com.Your-Agent-Name",
+    "name": "Your Agent Name",
+    "imageUrl": "",
+    "workflowTTLInMinutes": "10",
+    "walletDb": {
+      "connectionName": "database",
+      "databaseName": "dev_db"
+    },
+    "workflowDb": {
+      "connectionName": "database",
+      "databaseName": "dev_agency_db",
+      "autoSyncSchema": true
+    },
+    "security": {
+      "seed": "your000000000000000000000000seed",
+      "issuerSeed": "your000000000000000000000000seed",
+      "walletKey": "your_wallet_pass"
+    },
+    "schema": {
+      "agentNym": "your_generated_nym",
+      "schemaIds": [
+        "YVNdscTL49uSrzNgVCYkQA:2:schema.com.one37id.generic:3.2",
+        "UKywUdooihbBzT191QqgYi:2:schema.com.one37.contact:1.0",
+        "913pWJAe5HoU3fn6zadbAe:2:schema.com.one37.identitycard:1.4",
+        "UKywUdooihbBzT191QqgYi:2:schema.com.one37.passport:1.2"
+      ]
+    },
+    "callback": {
+      "url": "https://NgrokHostname/proofrequest/webhook",
+      "retryCount": "3",
+      "retryDelay": "5"
+    },
+    "metadata": {
+      "support": "support@one37id.com",
+      "privacyPolicy": "https://yourbusiness/privacypolicy.html",
+      "copyright": "2022 (c) One37 Solutions Inc. All Rights Reserved",
+      "flags": "1"
+    },
+    "automation": {
+      "onConnect": "",
+      "onUpdate": "",
+      "onDisconnect": ""
+    }
+  },
+  "authentication": {
+    "secretKey": "ConnectorAPISecretKey",
+    "requestMaxTTL": "1",
+    "nonceTTL": "2"
+  },
+  "mobileAppAuthentication": {},
+  "CorsOrigins": [ "https://NgrokHostname", "https://localhost:3000"],
+  "IdentityServer": {
+    "PollInterval": 2000,
+    "ConnectionStrings": {
+      "Database": "Host=database;Port=5432;Database=Your-Agent-NameIdS4;User ID=postgres;Password=postgres;"
+    },
+    "CertificateFilename": "secret.rsa",
+    "PublicOrigin": "https://NgrokHostname",
+    "AccessTokenLifeTimeSeconds": 172800,
+    "Clients": [
+      {
+        "Enabled": true,
+        "ClientId": "local",
+        "ClientSecret": "ClientSecretValue",
+        "ClientName": "local",
+        "AllowedGrantTypes": [ "implicit", "code" ],
+        "AllowedScopes": [ "openid", "profile", "vc_authn" ],
+        "RedirectUris": [ "https://NgrokHostname/vc/signin-vcauth" ],
+        "RequireClientSecret": true,
+        "RequireConsent": false,
+        "IdentityTokenLifetime": 172800,
+        "AlwaysIncludeUserClaimsInIdToken": true
+      },
+      {
+        "Enabled": true,
+        "ClientId": "demo-client",
+        "ClientName": "web-ng-oauth-tester",
+        "ClientSecret": "ClientSecretValue",
+        "AllowedGrantTypes": [ "implicit", "code" ],
+        "AllowedScopes": [ "openid", "profile", "vc_authn" ],
+        "RedirectUris": [ "https://oauth.tools/callback/code" ],
+        "RequireClientSecret": true,
+        "RequireConsent": false,
+        "IdentityTokenLifetime": 172800,
+        "AlwaysIncludeUserClaimsInIdToken": true
+      }
+    ]
+  },
+  "UrlShortenerService": {
+    "ConnectionStrings": {
+      "Database": "Host=database;Port=5432;Database=Your-Agent-NameIdS4;User ID=postgres;Password=postgres;"
+    },
+    "BaseUrl": "https://NgrokHostname/vc/url"
+  },
+  "SessionStorageService": {
+    "ConnectionStrings": {
+      "Database": "Host=database;Port=5432;Database=Your-Agent-NameIdS4;User ID=postgres;Password=postgres;"
+    },
+    "SessionLifetimeInSeconds": 600
+  },
+  "SSO": {
+    "VC_OA_ClientId": "local",
+    "VC_OA_Secret": "secretvalue",
+    "VC_OA_AuthUrl": "https://NgrokHostname/vc/connect/authorize",
+    "VC_OA_TokenUrl": "https://NgrokHostname/vc/connect/token"
+  }
+}

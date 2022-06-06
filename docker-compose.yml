@@ -1,48 +1,49 @@
-version: '1.0'
+version: '2.0'
 services:
-  db:
+  database:
+    container_name: database
     image: postgres:14.1-alpine
-    restart: always
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:
-      - '5432:5432'
+      - "5432:5432"
     volumes:
-      - db:/var/lib/postgresql/data
-  cache:
+      - database:/var/lib/postgresql/data
+  redis:
+    container_name: redis
     image: redis:latest
-    restart: always
+    pull_policy: always
     ports:
-      - '6379:6379'
-    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxxxxxxxxxxxxxx8oLd2t81
+      - "6379:6379"
+    command: redis-server --save 20 1 --loglevel warning
     volumes:
-      - cache:/data
+      - redis:/data
   agent:
+    container_name: agent
     image: registry.gitlab.com/one37id/registry/solitaire/staging
+    pull_policy: always
+    restart: always
     depends_on:
-      - db
-      - cache
+      - database
+      - redis
     ports:
-      - 3000:3000
+      - "3000:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - MINIMUM_LOG_LEVEL=1
       - AGENT_SETUP_MODE=true
       - RECREATE_WORKFLOWS=false
       - DELETE_REDIS_CONFIG=false
-      - AGENT_ALIAS=CHANGEME_TO_UNIQUE_VAL.dev
-      - KESTREL_PORT=3000
+      - KESTREL_PORT=80
       - AUTH_REQUEST_MAX_TTL_MINUTES=1
       - AUTH_BACKDOOR_SECRET_KEY=LocalDevHash
-      - AUTH_SECRET_KEY=EzAKoAxdivooooooooooooofIgb5zHOi
+      - AUTH_SECRET_KEY=API_SECRET_KEY
       - AUTH_NONCE_TTL_MINUTES=1
-      - REDIS_HOST=cache
+      - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - REDIS_PASSWORD=eYVX7EwVmmxxxxxxxxxxxxxx8oLd2t81
-    links:
-      - db
-      - cache
 volumes:
-  cache:
+  redis:
+    driver: local
+  database:
     driver: local
