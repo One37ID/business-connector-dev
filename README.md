@@ -16,20 +16,27 @@ This is achieved with simple RESTful API integration and No-Code visual design f
 
 ### Requirements
 
-The developer workstation will need to meet the following requirements:
+The developer host instance will need to meet the following requirements:
 
-* **Windows 10+** or **Apple MacOS 14+** or **Linux OS distribution**
-* **Docker Desktop or Docker CE** installed with **docker-compose** support.
-* A Public Internet address or Inward traffic routing solution like [Ngrok](https://ngrok.com/docs/getting-started)
-* One37 issued Docker Registry access credentials
-* Appropriate code editing tools for your chosen software development languages. eg [VSCode](https://code.visualstudio.com/)
+* **Linux OS distribution (free tier Compute instance from any cloud provider)**
+* **Docker** installed with **docker-compose** support.
+* A **Public Internet address** with **DIRECT SSH & HTTPS** inbound access
+* One37 issued **Docker Registry access credentials**
+* Appropriate code editing tools for your chosen software development languages. eg [**VSCode**](https://code.visualstudio.com/)
 
 ### Setup
 
 Sign-in to GitHub and Fork the following repository to your own account.
 [https://github.com/One37ID/business-connector-dev.git](https://github.com/One37ID/business-connector-dev.git)
 
-At the command line interface for the relevant operating system, clone the new forked repo to a local working folder.
+#### Host Setup
+
+Create a Linux based Virtual machine in any cloud provider or compute environment of your choice.
+It **MUST** meet the requirements as stipulated above.
+
+This guide will not detail the steps required for this, but you may find and example procedure for an AWS EC2 setup in the `Host-Setup-AWS.md` file in this repo.
+
+Once you have a a running host, connect to it's shell interface and clone down your forked repo to a host working folder.
 
 ``` bash
 git clone https://github.com/YOUR_OWN_ACCOUNT/business-connector-dev.git
@@ -40,12 +47,17 @@ As of the latest release, your local folder contents should look like this.
 ``` powershell
 Mode                 LastWriteTime         Length Name
 ----                 -------------         ------ ----
--a---          2022/06/02    12:39           6594 .gitignore
--a---          2022/06/02    15:20           5874 COPYME-config.json
--a---          2022/06/02    13:48           1268 docker-compose.yml
--a---          2022/06/04    12:33           7322 README.md
--a---          2022/06/05    09:32             42 run-agent.bat
--a---          2022/06/05    09:32             42 run-agent.sh
+d----          2022/06/09    14:19                .media
+d----          2022/06/09    12:12                agent
+d----          2022/06/09    12:14                data
+-a---          2022/06/06    10:48              0 .dockerignore
+-a---          2022/06/09    11:53           6621 .gitignore
+-a---          2022/06/09    12:31           4601 COPYME-config.json
+-a---          2022/06/09    12:16           1130 docker-compose.yml
+-a---          2022/06/09    14:44           1752 Host-Setup-AWS.md
+-a---          2022/06/09    14:47           7469 README.md
+-a---          2022/06/09    12:31            195 run-agent.sh
+-a---          2022/06/06    10:50             21 stop.bat
 ```
 <br>
 Setup `ngrok` as per it's platform specific installation instructions.
@@ -111,37 +123,35 @@ volumes:
 
 ### Start the services
 
-Start the services into config mode with the appropriate `run-agent` shell script for your environment or this command in the project folder:
+Start the services into config mode with the provided shell script in the project folder.
+**NOTE:** This file must be edited to include the **One37 Registry Credentials** you have been issued.
 
 ``` bash
-docker-compose -f docker-compose.yml up -d
+./run-agent.sh
 ```
 
-After it has started you can confirm this by pointing your browser to
-
-[http://localhost:3000/swagger](http://localhost:3000/swagger)
-
-In order to be able to communicate with this instance from the Upa! Wallet App, it will need to be publicly accessible.
-
-Start ngrok as follows to make a publicly accessible network tunnel.
+You will see the following output if all services have been started.
 <br>
 ```
-ngrok http 3000
+
 ```
+<br>
+After it has started you can confirm this by pointing your browser to the public hostname of your VM instance.
 
-It will set up the tunnel and output a **Forwarding URL** that will need to be captured into the service's configuration as detailed below.
-
-**Note:**
-Unless you have a paid subscription to ngrok with custom domains configured, this **forwarding** value will only be valid for **this session** and the config will need updating each time ngrok is restarted.
+You can also attach to the logs of the services (best done in a second terminal session)
+<br>
+```
+docker-compose logs -f -t [SERVICE...]
+```
 
 ### Access and Configuration
 
-You must also make a copy of `COPYME.config.json` and alter it to match any modifications made to the redis or postgres db connection credentials and ports.
-
-Also update the `hostName` and `agency.callbackUrl` host path values based on the **Forwarding URL** generated by **ngrok**
-
-Test access to the Swagger URL using the Ngrok hostname.
-
+After the agent service reports that it has started the web server, you can confirm this by pointing your browser to the URL comprising of the **public hostname** of your VM instance followed by `/swagger`.
+<br>
+```
+https://[yourvominstance.hostname.com]/swagger
+```
+<br>
 Yopu should see this:
 
 <br>
