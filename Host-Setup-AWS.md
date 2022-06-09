@@ -7,18 +7,18 @@
 ### Create EC2 Instance
 
 It is relatively simple to create an usable EC2 instance using the new EC2 Launch Wizard.
-Simply leave all the deaults and include the following options:
+Simply leave all the defaults and include the following options:
 
-* give your instance a name
-![Wizard Overview](.media/img_0.png)
-* create a Login KeyPair (if you don't already have one)
-![Wizard KeyPair](.media/img_1.png)
-* select the additional HTTPS & HTTP inbound traffic access rules
-![Wizard Networking](.media/img_2.png)
-Then click Launch and wait a minute for the instance to start.
-![Wizard Launch](.media/img_3.png)
+Give your instance a name<br>
+![Wizard Overview](.media/img_0.png)<br>
+Create a Login KeyPair (if you don't already have one)<br>
+![Wizard KeyPair](.media/img_1.png)<br>
+Select the additional HTTPS & HTTP inbound traffic access rules<br>
+![Wizard Networking](.media/img_2.png)<br>
+Then click Launch and wait a minute for the instance to start.<br>
+![Wizard Launch](.media/img_3.png)<br>
 
-After a bit you will see the instances created and the summary of any selected instance.
+After a bit you will see the instances created and the summary of any selected instance.<br>
 ![Wizard Networking](.media/img_4.png)
 
 ### Connect to Instance
