@@ -1,7 +1,7 @@
 {
   "environment": "Development",
   "minimumLogLevel": "1",
-  "hostname": "NgrokHostname",
+  "hostname": "[INSTANCE.HOSTNAME]",
   "port": "443",
   "databases": [
     {
@@ -10,9 +10,9 @@
       "host": "database",
       "port": "5432",
       "adminUser": "postgres",
-      "adminPassword": "postgres",
+      "adminPassword": "password",
       "user": "postgres",
-      "Password": "postgres"
+      "Password": "password"
     },
     {
       "connectionName": "redis",
@@ -27,9 +27,9 @@
     }
   },
   "agency": {
-    "alias": "dev:Your-Agent-Name",
-    "namespace": "com.Your-Agent-Name",
-    "name": "Your Agent Name",
+    "alias": "dev:[YOUR-AGENT-NAME]",
+    "namespace": "com.[YOUR-AGENT-NAME]",
+    "name": "[Your Agent Name]",
     "imageUrl": "",
     "workflowTTLInMinutes": "10",
     "walletDb": {
@@ -42,12 +42,12 @@
       "autoSyncSchema": true
     },
     "security": {
-      "seed": "your000000000000000000000000seed",
-      "issuerSeed": "your000000000000000000000000seed",
-      "walletKey": "your_wallet_pass"
+      "seed": "[your000000000000000000000000seed]",
+      "issuerSeed": "[your000000000000000000000000seed]",
+      "walletKey": "[Your-Wallet-Passkey]"
     },
     "schema": {
-      "agentNym": "your_generated_nym",
+      "agentNym": "[Your-Generated-Did]",
       "schemaIds": [
         "YVNdscTL49uSrzNgVCYkQA:2:schema.com.one37id.generic:3.2",
         "UKywUdooihbBzT191QqgYi:2:schema.com.one37.contact:1.0",
@@ -56,7 +56,7 @@
       ]
     },
     "callback": {
-      "url": "https://NgrokHostname/proofrequest/webhook",
+      "url": "https://[INSTANCE.HOSTNAME]/proofrequest/webhook",
       "retryCount": "3",
       "retryDelay": "5"
     },
@@ -78,14 +78,14 @@
     "nonceTTL": "2"
   },
   "mobileAppAuthentication": {},
-  "CorsOrigins": [ "https://NgrokHostname", "https://localhost:3000"],
+  "CorsOrigins": [ "https://[INSTANCE.HOSTNAME]", "https://localhost:3000"],
   "IdentityServer": {
     "PollInterval": 2000,
     "ConnectionStrings": {
-      "Database": "Host=database;Port=5432;Database=Your-Agent-NameIdS4;User ID=postgres;Password=postgres;"
+      "Database": "Host=database;Port=5432;Database=[YOUR-AGENT-NAME]_IDS4;User ID=postgres;Password=password;"
     },
     "CertificateFilename": "secret.rsa",
-    "PublicOrigin": "https://NgrokHostname",
+    "PublicOrigin": "https://[INSTANCE.HOSTNAME]",
     "AccessTokenLifeTimeSeconds": 172800,
     "Clients": [
       {
@@ -95,7 +95,7 @@
         "ClientName": "local",
         "AllowedGrantTypes": [ "implicit", "code" ],
         "AllowedScopes": [ "openid", "profile", "vc_authn" ],
-        "RedirectUris": [ "https://NgrokHostname/vc/signin-vcauth" ],
+        "RedirectUris": [ "https://[INSTANCE.HOSTNAME]/vc/signin-vcauth" ],
         "RequireClientSecret": true,
         "RequireConsent": false,
         "IdentityTokenLifetime": 172800,
@@ -118,20 +118,23 @@
   },
   "UrlShortenerService": {
     "ConnectionStrings": {
-      "Database": "Host=database;Port=5432;Database=Your-Agent-NameIdS4;User ID=postgres;Password=postgres;"
+      "Database": "Host=database;Port=5432;Database=[YOUR-AGENT-NAME]_IDS4;User ID=postgres;Password=password;"
     },
-    "BaseUrl": "https://NgrokHostname/vc/url"
+    "BaseUrl": "https://[INSTANCE.HOSTNAME]/vc/url"
   },
   "SessionStorageService": {
     "ConnectionStrings": {
-      "Database": "Host=database;Port=5432;Database=Your-Agent-NameIdS4;User ID=postgres;Password=postgres;"
+      "Database": "Host=database;Port=5432;Database=[YOUR-AGENT-NAME]_IDS4;User ID=postgres;Password=password;"
     },
     "SessionLifetimeInSeconds": 600
   },
   "SSO": {
     "VC_OA_ClientId": "local",
-    "VC_OA_Secret": "secretvalue",
-    "VC_OA_AuthUrl": "https://NgrokHostname/vc/connect/authorize",
-    "VC_OA_TokenUrl": "https://NgrokHostname/vc/connect/token"
+    "VC_OA_Secret": "[Local-Secret-Key]",
+    "VC_OA_AuthUrl": "https://[INSTANCE.HOSTNAME]/vc/connect/authorize",
+    "VC_OA_TokenUrl": "https://[INSTANCE.HOSTNAME]/vc/connect/token",
+    "DEV_OA_ClientId": "[Azure-Client-Id]",
+    "DEV_OA_Secret": "[Azure-Secret-Key]",
+    "DEV_OA_Endpoint": "https://login.microsoftonline.com/[AZURE_INSTANCE_ID]/v2.0/.well-known/openid-configuration"
   }
 }

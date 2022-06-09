@@ -5,20 +5,19 @@ services:
     image: postgres:14.1-alpine
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_PASSWORD=password
     ports:
       - "5432:5432"
     volumes:
-      - database:/var/lib/postgresql/data
+      - ./data/postgres:/var/lib/postgresql/data
   redis:
     container_name: redis
     image: redis:latest
-    pull_policy: always
     ports:
       - "6379:6379"
     command: redis-server --save 20 1 --loglevel warning
     volumes:
-      - redis:/data
+      - ./data/redis:/data
   agent:
     container_name: agent
     image: registry.gitlab.com/one37id/registry/solitaire/staging
@@ -28,7 +27,7 @@ services:
       - database
       - redis
     ports:
-      - "3000:80"
+      - "80:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - MINIMUM_LOG_LEVEL=1
@@ -37,13 +36,8 @@ services:
       - DELETE_REDIS_CONFIG=false
       - KESTREL_PORT=80
       - AUTH_REQUEST_MAX_TTL_MINUTES=1
-      - AUTH_BACKDOOR_SECRET_KEY=LocalDevHash
+      - AUTH_BACKDOOR_SECRET_KEY=Hash
       - AUTH_SECRET_KEY=API_SECRET_KEY
       - AUTH_NONCE_TTL_MINUTES=1
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-volumes:
-  redis:
-    driver: local
-  database:
-    driver: local
