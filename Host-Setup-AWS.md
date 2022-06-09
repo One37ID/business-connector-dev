@@ -25,21 +25,20 @@ After a bit you will see the instances created and the summary of any selected i
 
 Clicking the CONNECT button at the top of the summary screen will show you a dialog of common ways to connect to your new instances command shell. You will need the Key-Pair file you created above if you choose the SSH method.
 
-Once you have connected you should see the following in your terminal program.
+Once you have connected you should see the following in your terminal program.<br>
 ![Command Shell](.media/img_5.png)
-
 ### Install Software Pre-requisites
 
 #### Install Security Updates
 
 As prompted during the initial shell login welcome, you should install any additional updates and security patches if prompted.
-<br>
-```
+
+``` bash
 sudo yum update
 ```
 
 #### Install Docker tools
-<br>
+
 ``` bash
 sudo yum install docker
 sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
@@ -48,7 +47,7 @@ docker-compose version
 ```
 
 #### Install Git
-<br>
-```
+
+``` bash
 sudo yum install git
 ```
