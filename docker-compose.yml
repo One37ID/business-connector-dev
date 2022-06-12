@@ -37,10 +37,50 @@ services:
       - KESTREL_PORT=80
       - AUTH_REQUEST_MAX_TTL_MINUTES=1
       - AUTH_BACKDOOR_SECRET_KEY=Hash
-      - AUTH_SECRET_KEY=API_SECRET_KEY
+      - AUTH_SECRET_KEY=ConnectorAPISecretKey
       - AUTH_NONCE_TTL_MINUTES=1
       - REDIS_HOST=redis
       - REDIS_PORT=6379
     volumes:
       - ./agent:/app/agent
       - ./wwwroot:/app/wwwroot
+  demo:
+    container_name: demo
+    image: registry.gitlab.com/one37id/registry/w1demo/staging
+    pull_policy: always
+    restart: always
+    depends_on:
+      - database
+      - agent
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - MINIMUM_LOG_LEVEL=1
+      - AUTH_REQUEST_MAX_TTL_MINUTES=1
+      - AUTH_BACKDOOR_SECRET_KEY=Hash
+      - AUTH_SECRET_KEY=ConnectorAPISecretKey
+      - AUTH_NONCE_TTL_MINUTES=1
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - SERVICE_ROOT=https://0.0.0.0:8080
+      - AGENCY_URL=https://test-agent.one37id.com
+      - REACT_APP_API_URL=https://test-agent.one37id.com:8552
+      - ADMIN_ALIAS=w1admin
+      - SITE_ALIAS=dibbs-agent
+      - PG_HOST=database
+      - PG_PORT=5432
+      - PG_USER=postgres
+      - PG_PSWD=password
+      - PG_DBNAME=wireless1_logic_db
+      - JWT_ISSUER="one37mobile"
+      - JWT_KEY="3ABC996FA12464B54CFB4C5565E5E"
+      - JWT_EXP_MM="10"
+      - REFRESH_TOKEN_EXP_HOURS="24"
+      - FACEMATCH_URL=https://wj.one37id.com/api
+      - FACEMATCH_THRESHOLD=0.6
+      - BILLING_SERVICE_CRON="0 9-15 * * *"
+      - SERVICE_PERIOD_DAYS=30
+      - SERVICE_PAYMENT_START_REMIND_DAYS=-2
+      - SERVICE_PAYMENT_DUE_DAYS=5
+
