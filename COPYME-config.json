@@ -34,11 +34,11 @@
     "workflowTTLInMinutes": "10",
     "walletDb": {
       "connectionName": "database",
-      "databaseName": "dev_db"
+      "databaseName": "WALLET_DB"
     },
     "workflowDb": {
       "connectionName": "database",
-      "databaseName": "dev_agency_db",
+      "databaseName": "AGENT_DB",
       "autoSyncSchema": true
     },
     "security": {
@@ -56,7 +56,7 @@
       ]
     },
     "callback": {
-      "url": "https://[INSTANCE.HOSTNAME]/proofrequest/webhook",
+      "url": "http://demo:8080/webhook",
       "retryCount": "3",
       "retryDelay": "5"
     },
@@ -82,7 +82,7 @@
   "IdentityServer": {
     "PollInterval": 2000,
     "ConnectionStrings": {
-      "Database": "Host=database;Port=5432;Database=[YOUR-AGENT-NAME]_IDS4;User ID=postgres;Password=password;"
+      "Database": "Host=database;Port=5432;Database=AGENT_IDS4;User ID=postgres;Password=password;"
     },
     "CertificateFilename": "secret.rsa",
     "PublicOrigin": "https://[INSTANCE.HOSTNAME]",
@@ -118,13 +118,13 @@
   },
   "UrlShortenerService": {
     "ConnectionStrings": {
-      "Database": "Host=database;Port=5432;Database=[YOUR-AGENT-NAME]_IDS4;User ID=postgres;Password=password;"
+      "Database": "Host=database;Port=5432;Database=AGENT_IDS4;User ID=postgres;Password=password;"
     },
     "BaseUrl": "https://[INSTANCE.HOSTNAME]/vc/url"
   },
   "SessionStorageService": {
     "ConnectionStrings": {
-      "Database": "Host=database;Port=5432;Database=[YOUR-AGENT-NAME]_IDS4;User ID=postgres;Password=password;"
+      "Database": "Host=database;Port=5432;Database=AGENT_IDS4;User ID=postgres;Password=password;"
     },
     "SessionLifetimeInSeconds": 600
   },

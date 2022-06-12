@@ -56,11 +56,10 @@ d----          2022/06/09    12:14                dat
 -a---          2022/06/09    12:16           1130 docker-compose.yml
 -a---          2022/06/09    14:44           1752 Host-Setup-AWS.md
 -a---          2022/06/09    14:47           7469 README.md
+-a---          2022/06/09    12:31            195 login.sh
 -a---          2022/06/09    12:31            195 run-agent.sh
 -a---          2022/06/06    10:50             21 stop.bat
 ```
-<br>
-Setup `ngrok` as per it's platform specific installation instructions.
 
 ## Usage
 
@@ -68,8 +67,8 @@ Setup `ngrok` as per it's platform specific installation instructions.
 
 Before starting the Business Connector, it may be preferred to modify several parameters that are present in the `docker-compose.yml` file.
 For instance the file has values which define passwords for access to the Redis and PostgreSQL instances and these should be changed for better security.
-<br>
-```
+
+``` yaml
 version: '1.0'
 services:
   db:
@@ -124,16 +123,18 @@ volumes:
 ### Start the services
 
 Start the services into config mode with the provided shell script in the project folder.
-**NOTE:** This file must be edited to include the **One37 Registry Credentials** you have been issued.
+
+**NOTE:** The `login.sh` file must be edited to include the **One37 Registry Credentials** you have been issued.
 
 ``` bash
+./login.sh
 ./run-agent.sh
 ```
-
-You will see the following output if all services have been started.
+<br>
+NOTE: The .sh files might need to be marked as executable after the first repo pull.
 <br>
 ```
-
+chmod +x *.sh
 ```
 <br>
 After it has started you can confirm this by pointing your browser to the public hostname of your VM instance.
@@ -141,44 +142,75 @@ After it has started you can confirm this by pointing your browser to the public
 You can also attach to the logs of the services (best done in a second terminal session)
 <br>
 ```
-docker-compose logs -f -t [SERVICE...]
+docker-compose logs -f
 ```
 
 ### Access and Configuration
 
 After the agent service reports that it has started the web server, you can confirm this by pointing your browser to the URL comprising of the **public hostname** of your VM instance followed by `/swagger`.
-<br>
-```
+
+``` url
 https://[yourvominstance.hostname.com]/swagger
 ```
-<br>
-Yopu should see this:
 
+You should see the **Swagger API UI**.
+You may get Certificate error messages in the browser if the EC2 load balancer has not been configured properly.
+
+Using the Swagger UI, you can now deploy the required configuration to the Agent.
+Click on `TRY it out` and use the value `Hash` in the first input fields. Leave the other fields empty.
+
+For the body of the request we are going to paste a json configuration payload which we will create next.
+
+#### Edit the config json
+
+The source code provides a template config file `COPYME-config.json` which you should make a copy of to modify according to your environment.
+Editing this on your workstation may be the easiest.
+
+``` bash
+cp COPYME-config.json dev.json
+```
+
+Edit dev.json and update the sections enclosed by `[ ]` before deployment:
+
+Do a global search and replace in the file for `[INSTANCE.HOSTNAME]` replacing it with the hosts public DNS address (e.g. of the Load balancer)
+
+at the `agency` level:
+
+``` json
+    "alias": "dev:[YOUR-AGENT-NAME]",
+    "namespace": "com.[YOUR-AGENT-NAME]",
+    "name": "[Your Agent Name]",
+```
 <br>
+at `agency.security`: (seed values provided by one37)
+
+``` json
+      "seed": "[your000000000000000000000000seed]",
+      "issuerSeed": "[your000000000000000000000000seed]",
+      "walletKey": "[Your-Wallet-Passkey]"
+```
+<br>
+at `agency.schema`: (DID provided by one37)
+
+``` json
+      "agentNym": "[Your-Generated-Did]",
+```
+<br>
+Once the neccesary changes have been made, copy the entire contents and paste it into the Agent Swagger Config Set body input area.
+
+Click `Execute` and you will see that in the logs that the agent container has restarted and is proceeding to set itself up.
+Please wait until all activity ceases or make a note of any failure mesagges to determine a remedial course of action.
+
 ## Support
 
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+Please direct any support queries via the Issues function in the GitHub Repo.
 
 ## Authors and acknowledgment
 
-Show your appreciation to those who have contributed to the project.
+This project was made possible by the following contributors:
+G. De Beer (Dibbs\_ZA)
+A. Podick
 
 ## License
 
 For open source projects, say how it is licensed.
-
-## Project status
-
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
