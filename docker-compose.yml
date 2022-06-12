@@ -63,9 +63,9 @@ services:
       - AUTH_NONCE_TTL_MINUTES=1
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - SERVICE_ROOT=https://0.0.0.0:8080
+      - SERVICE_ROOT=http://0.0.0.0:8080
       - AGENCY_URL=https://test-agent.one37id.com
-      - REACT_APP_API_URL=https://test-agent.one37id.com:8552
+      - REACT_APP_API_URL=https://test-agent.one37id.com:8080
       - ADMIN_ALIAS=w1admin
       - SITE_ALIAS=dibbs-agent
       - PG_HOST=database
