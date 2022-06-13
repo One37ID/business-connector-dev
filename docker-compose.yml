@@ -78,10 +78,10 @@ services:
       - PG_USER=postgres
       - PG_PSWD=password
       - PG_DBNAME=wireless1_logic_db
-      - JWT_ISSUER="one37mobile"
-      - JWT_KEY="3ABC996FA12464B54CFB4C5565E5E"
-      - JWT_EXP_MM="10"
-      - REFRESH_TOKEN_EXP_HOURS="24"
+      - JWT_ISSUER=dibbs-agent
+      - JWT_KEY=3ABC996FA12464B54CFB4C5565E5E
+      - JWT_EXP_MM=10
+      - REFRESH_TOKEN_EXP_HOURS=24
       - FACEMATCH_URL=https://wj.one37id.com/api
       - FACEMATCH_THRESHOLD=0.6
       - BILLING_SERVICE_CRON=0 9-15 * * *
