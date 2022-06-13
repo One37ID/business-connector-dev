@@ -11,16 +11,26 @@ Setting up a small linux host in the cloud is our recommended approach to gettin
 It is relatively simple to create an usable EC2 instance using the new EC2 Launch Wizard.
 We will use Ubuntu 20.04 LTS as the OS and leave all the other defaults and include the following options:
 
-Give your instance a name
+**Give your instance a name and choose OS**
+
 ![Wizard Overview](.media/img_0.png)
-Create a Login KeyPair (if you don't already have one)
+
+**Create a Login KeyPair (if you don't already have one)**
+
 ![Wizard KeyPair](.media/img_1.png)
-Select the additional HTTPS & HTTP inbound traffic access rules
+
+**Select the additional HTTPS & HTTP inbound traffic access rules**
+
 ![Wizard Networking](.media/img_2.png)
-Then click Launch and wait a minute for the instance to start.
+
+**Then click `Launch Instance` and wait a minute for the instance to start.**
+
 ![Wizard Launch](.media/img_3.png)
 
+
+
 After a bit you will see the instances created and the summary of any selected instance.
+
 ![Wizard Networking](.media/img_4.png)
 
 ### Connect to Instance
