@@ -69,9 +69,10 @@ services:
       - ROLE=http://schemas.microsoft.com/ws/2008/06/identity/claims/role
       - NAMEIDENTIFIER=http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier
       - GIVENNAME=http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname
-      - ADMIN_ALIAS=w1admin
+      - ADMIN_ALIAS=fedoraman
       - SITE_NAME=test-agent.one37id.com
       - AGENT_ALIAS=dibbs-agent
+      - AGENT_NAMESPACE=com.dibbs-agent
       - PG_HOST=database
       - PG_PORT=5432
       - PG_USER=postgres
