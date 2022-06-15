@@ -1,7 +1,7 @@
 {
   "environment": "Development",
   "minimumLogLevel": "1",
-  "hostname": "[INSTANCE.HOSTNAME]",
+  "hostname": "[AGENT_PUBLIC_DNS]",
   "port": "443",
   "databases": [
     {
@@ -27,8 +27,8 @@
     }
   },
   "agency": {
-    "alias": "dev:[YOUR-AGENT-NAME]",
-    "namespace": "com.[YOUR-AGENT-NAME]",
+    "alias": "[AGENT_ALIAS]",
+    "namespace": "com.[AGENT_ALIAS]",
     "name": "[Your Agent Name]",
     "imageUrl": "",
     "workflowTTLInMinutes": "10",
@@ -52,7 +52,8 @@
         "YVNdscTL49uSrzNgVCYkQA:2:schema.com.one37id.generic:3.2",
         "UKywUdooihbBzT191QqgYi:2:schema.com.one37.contact:1.0",
         "913pWJAe5HoU3fn6zadbAe:2:schema.com.one37.identitycard:1.4",
-        "UKywUdooihbBzT191QqgYi:2:schema.com.one37.passport:1.2"
+        "UKywUdooihbBzT191QqgYi:2:schema.com.one37.passport:1.2",
+        "UKywUdooihbBzT191QqgYi:2:schema.com.one37.authorization:1.4"
       ]
     },
     "callback": {
@@ -62,7 +63,7 @@
     },
     "metadata": {
       "support": "support@one37id.com",
-      "privacyPolicy": "https://yourbusiness/privacypolicy.html",
+      "privacyPolicy": "https://one37id.com/privacypolicy.html",
       "copyright": "2022 (c) One37 Solutions Inc. All Rights Reserved",
       "flags": "1"
     },
@@ -78,14 +79,14 @@
     "nonceTTL": "2"
   },
   "mobileAppAuthentication": {},
-  "CorsOrigins": [ "https://[INSTANCE.HOSTNAME]", "https://localhost:3000"],
+  "CorsOrigins": [ "https://[AGENT_PUBLIC_DNS]", "http://localhost:3000"],
   "IdentityServer": {
     "PollInterval": 2000,
     "ConnectionStrings": {
       "Database": "Host=database;Port=5432;Database=AGENT_IDS4;User ID=postgres;Password=password;"
     },
     "CertificateFilename": "secret.rsa",
-    "PublicOrigin": "https://[INSTANCE.HOSTNAME]",
+    "PublicOrigin": "https://[AGENT_PUBLIC_DNS]",
     "AccessTokenLifeTimeSeconds": 172800,
     "Clients": [
       {
@@ -95,7 +96,7 @@
         "ClientName": "local",
         "AllowedGrantTypes": [ "implicit", "code" ],
         "AllowedScopes": [ "openid", "profile", "vc_authn" ],
-        "RedirectUris": [ "https://[INSTANCE.HOSTNAME]/vc/signin-vcauth" ],
+        "RedirectUris": [ "https://[AGENT_PUBLIC_DNS]/vc/signin-vcauth" ],
         "RequireClientSecret": true,
         "RequireConsent": false,
         "IdentityTokenLifetime": 172800,
@@ -120,7 +121,7 @@
     "ConnectionStrings": {
       "Database": "Host=database;Port=5432;Database=AGENT_IDS4;User ID=postgres;Password=password;"
     },
-    "BaseUrl": "https://[INSTANCE.HOSTNAME]/vc/url"
+    "BaseUrl": "https://[AGENT_PUBLIC_DNS]/vc/url"
   },
   "SessionStorageService": {
     "ConnectionStrings": {
@@ -131,8 +132,8 @@
   "SSO": {
     "VC_OA_ClientId": "local",
     "VC_OA_Secret": "[Local-Secret-Key]",
-    "VC_OA_AuthUrl": "https://[INSTANCE.HOSTNAME]/vc/connect/authorize",
-    "VC_OA_TokenUrl": "https://[INSTANCE.HOSTNAME]/vc/connect/token",
+    "VC_OA_AuthUrl": "https://[AGENT_PUBLIC_DNS]/vc/connect/authorize",
+    "VC_OA_TokenUrl": "https://[AGENT_PUBLIC_DNS]/vc/connect/token",
     "DEV_OA_ClientId": "[Azure-Client-Id]",
     "DEV_OA_Secret": "[Azure-Secret-Key]",
     "DEV_OA_Endpoint": "https://login.microsoftonline.com/[AZURE_INSTANCE_ID]/v2.0/.well-known/openid-configuration"

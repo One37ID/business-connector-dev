@@ -41,6 +41,8 @@ services:
       - AUTH_NONCE_TTL_MINUTES=1
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+      - CONFIGURATION_URL=https://marketplace.one37id.com:8547/bp/contact/configuration/byalias/[AGENT_ALIAS]
+      - CONFIGURATION_SECRET_KEY=[AGENT_SECRET_KEY]
     volumes:
       - ./agent:/app/agent
       - ./wwwroot:/app/wwwroot
@@ -64,21 +66,21 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - SERVICE_ROOT=http://0.0.0.0:8080
-      - AGENCY_URL=https://test-agent.one37id.com
-      - REACT_APP_API_URL=https://test-agent.one37id.com:8080
+      - AGENCY_URL=https://[AGENT_PUBLIC_DNS]
+      - REACT_APP_API_URL=https://[AGENT_PUBLIC_DNS]:8080
       - ROLE=http://schemas.microsoft.com/ws/2008/06/identity/claims/role
       - NAMEIDENTIFIER=http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier
       - GIVENNAME=http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname
-      - ADMIN_ALIAS=fedoraman
-      - SITE_NAME=test-agent.one37id.com
-      - AGENT_ALIAS=dibbs-agent
-      - AGENT_NAMESPACE=com.dibbs-agent
+      - ADMIN_ALIAS=''
+      - SITE_NAME=[AGENT_PUBLIC_DNS]
+      - AGENT_ALIAS=[AGENT_ALIAS]
+      - AGENT_NAMESPACE=[AGENT_PUBLIC_DNS]
       - PG_HOST=database
       - PG_PORT=5432
       - PG_USER=postgres
       - PG_PSWD=password
-      - PG_DBNAME=wireless1_logic_db
-      - JWT_ISSUER=dibbs-agent
+      - PG_DBNAME=demo_logic_db
+      - JWT_ISSUER=[AGENT_ALIAS]
       - JWT_KEY=3ABC996FA12464B54CFB4C5565E5E
       - JWT_EXP_MM=10
       - REFRESH_TOKEN_EXP_HOURS=24
