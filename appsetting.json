@@ -1,0 +1,18 @@
+{
+  "AllowedHosts": "*",
+  "Kestrel": {
+    "Certificates": {
+      "Default": {
+        "Path": "ssl_key.pfx",
+        "Password": "---"
+      }
+    }
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information",
+    }
+  }
+}

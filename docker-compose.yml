@@ -28,66 +28,79 @@ services:
       - redis
     ports:
       - "80:80"
+      - "8080:8080"
+      # Uncomment if you want to use a local ssl certificates
+      #- "443:443"
     environment:
+      # #Service to Start
       - ASPNETCORE_ENVIRONMENT=Development
       - MINIMUM_LOG_LEVEL=1
       - AGENT_SETUP_MODE=true
-      - RECREATE_WORKFLOWS=false
-      - DELETE_REDIS_CONFIG=false
-      - KESTREL_PORT=80
+      - KESTREL_PORT=${PORT:-80}
+      - AGENT_NAME = "One37 Business Connector"
+
+      #One37 Studio Integration
+      - USE_STUDIO_CONFIG=true
+      - STUDIO_URL=https://marketplace.one37id.com:8587
+      - STUDIO_CONTACT_ID=${STUDIO_CONTACT_ID} #Contact ID from One37 Studio
+      - CONFIGURATION_SECRET_KEY=${CONFIGURATION_SECRET_KEY} #Secret Key from One37 Studio
+      - STUDIO_RSA_PRIVATE_KEY="${STUDIO_RSA_PRIVATE_KEY}" #RSA Private Key from One37 Studio
+
+      #Auth for Swagger Developer Overide based control
+      - AUTH_BACKDOOR_SECRET_KEY="${AUTH_BACKDOOR_SECRET_KEY:-SWAGGER-SECRET}" #Secret Key for Swagger Developer Overide
       - AUTH_REQUEST_MAX_TTL_MINUTES=1
-      - AUTH_BACKDOOR_SECRET_KEY=Hash
-      - AUTH_SECRET_KEY=ConnectorAPISecretKey
-      - AUTH_NONCE_TTL_MINUTES=1
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - CONFIGURATION_URL=https://marketplace.one37id.com:8547/bp/contact/configuration/byalias/[AGENT_ALIAS]
-      - CONFIGURATION_SECRET_KEY=[AGENT_SECRET_KEY]
+      - AUTH_NONCE_TTL_MINUTES=2
     volumes:
+      # Mount the local source code into the container
       - ./agent:/app/agent
       - ./wwwroot:/app/wwwroot
-  demo:
-    container_name: demo
-    image: registry.gitlab.com/one37id/registry/w1demo/staging
-    pull_policy: always
-    restart: always
-    depends_on:
-      - database
-      - agent
-    ports:
-      - "8080:8080"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - MINIMUM_LOG_LEVEL=1
-      - AUTH_REQUEST_MAX_TTL_MINUTES=1
-      - AUTH_BACKDOOR_SECRET_KEY=Hash
-      - AUTH_SECRET_KEY=ConnectorAPISecretKey
-      - AUTH_NONCE_TTL_MINUTES=1
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - SERVICE_ROOT=http://0.0.0.0:8080
-      - AGENCY_URL=https://[AGENT_PUBLIC_DNS]
-      - REACT_APP_API_URL=https://[AGENT_PUBLIC_DNS]:8080
-      - ROLE=http://schemas.microsoft.com/ws/2008/06/identity/claims/role
-      - NAMEIDENTIFIER=http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier
-      - GIVENNAME=http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname
-      - ADMIN_ALIAS=''
-      - SITE_NAME=[AGENT_PUBLIC_DNS]
-      - AGENT_ALIAS=[AGENT_ALIAS]
-      - AGENT_NAMESPACE=[AGENT_PUBLIC_DNS]
-      - PG_HOST=database
-      - PG_PORT=5432
-      - PG_USER=postgres
-      - PG_PSWD=password
-      - PG_DBNAME=demo_logic_db
-      - JWT_ISSUER=[AGENT_ALIAS]
-      - JWT_KEY=3ABC996FA12464B54CFB4C5565E5E
-      - JWT_EXP_MM=10
-      - REFRESH_TOKEN_EXP_HOURS=24
-      - FACEMATCH_URL=https://wj.one37id.com/api
-      - FACEMATCH_THRESHOLD=0.6
-      - BILLING_SERVICE_CRON=0 9-15 * * *
-      - SERVICE_PERIOD_DAYS=30
-      - SERVICE_PAYMENT_START_REMIND_DAYS=-2
-      - SERVICE_PAYMENT_DUE_DAYS=5
+      # Uncomment if you want to use a local ssl certificates
+      #- ./appsettings.json:/app/appsettings.json
+      #- ./ssl-key.pfx:/app/ss-key.pfx
+
+
+  # demo:
+  #   container_name: demo
+  #   image: registry.gitlab.com/one37id/registry/w1demo/staging
+  #   pull_policy: always
+  #   restart: always
+  #   depends_on:
+  #     - database
+  #     - agent
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - MINIMUM_LOG_LEVEL=1
+  #     - AUTH_REQUEST_MAX_TTL_MINUTES=1
+  #     - AUTH_BACKDOOR_SECRET_KEY=Hash
+  #     - AUTH_SECRET_KEY=ConnectorAPISecretKey
+  #     - AUTH_NONCE_TTL_MINUTES=1
+  #     - REDIS_HOST=redis
+  #     - REDIS_PORT=6379
+  #     - SERVICE_ROOT=http://0.0.0.0:8080
+  #     - AGENCY_URL=https://[AGENT_PUBLIC_DNS]
+  #     - REACT_APP_API_URL=https://[AGENT_PUBLIC_DNS]:8080
+  #     - ROLE=http://schemas.microsoft.com/ws/2008/06/identity/claims/role
+  #     - NAMEIDENTIFIER=http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier
+  #     - GIVENNAME=http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname
+  #     - ADMIN_ALIAS=''
+  #     - SITE_NAME=[AGENT_PUBLIC_DNS]
+  #     - AGENT_ALIAS=[AGENT_ALIAS]
+  #     - AGENT_NAMESPACE=[AGENT_PUBLIC_DNS]
+  #     - PG_HOST=database
+  #     - PG_PORT=5432
+  #     - PG_USER=postgres
+  #     - PG_PSWD=password
+  #     - PG_DBNAME=demo_logic_db
+  #     - JWT_ISSUER=[AGENT_ALIAS]
+  #     - JWT_KEY=3ABC996FA12464B54CFB4C5565E5E
+  #     - JWT_EXP_MM=10
+  #     - REFRESH_TOKEN_EXP_HOURS=24
+  #     - FACEMATCH_URL=https://wj.one37id.com/api
+  #     - FACEMATCH_THRESHOLD=0.6
+  #     - BILLING_SERVICE_CRON=0 9-15 * * *
+  #     - SERVICE_PERIOD_DAYS=30
+  #     - SERVICE_PAYMENT_START_REMIND_DAYS=-2
+  #     - SERVICE_PAYMENT_DUE_DAYS=5
 
